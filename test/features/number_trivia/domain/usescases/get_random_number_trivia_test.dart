@@ -1,38 +1,33 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:simple_ttd_architecture/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:simple_ttd_architecture/features/number_trivia/domain/repositories/number_trivia_repository.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:simple_ttd_architecture/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
+import 'package:simple_ttd_architecture/features/number_trivia/domain/usecases/get_random_number_trivia.dart';
 
 class MockNumberTriviaRepository extends Mock implements NumberTriviaRepository {}
 
 void main() {
-
-  GetContreteNumberTrivia useCase;
+  GetRandomNumberTrivia useCase;
   MockNumberTriviaRepository mockNumberTriviaRepository;
+  final testNumberTrivia = NumberTrivia(number: 4, text: 'test');
 
   setUp((){
     mockNumberTriviaRepository = MockNumberTriviaRepository();
-    useCase = GetContreteNumberTrivia(repository : mockNumberTriviaRepository);
+    useCase = GetRandomNumberTrivia(repository: mockNumberTriviaRepository);
   });
 
-  final testNumber = 1;
-  final testNumberTrivia = NumberTrivia(number: testNumber, text: 'test');
-
   test(
-    'should get trivia for the number from the repository',
+    'should get random trivia from the repository', 
     () async {
       // arrange
-      when(mockNumberTriviaRepository.getConcreteTriviaNumber(any))
-        .thenAnswer((_) async => Right(testNumberTrivia));
+      when(mockNumberTriviaRepository.getRandomTriviaNumber()).thenAnswer((_) async =>  Right(testNumberTrivia));
       // act
-      final result = await useCase(Params(number: testNumber));
+      final result = await useCase(NoParams());
       // assert
       expect(result, Right(testNumberTrivia));
-      verify(mockNumberTriviaRepository.getConcreteTriviaNumber(testNumber));
+      verify(mockNumberTriviaRepository.getRandomTriviaNumber());
       verifyNoMoreInteractions(mockNumberTriviaRepository);
-
   });
 
 }
