@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_ttd_architecture/core/error/failures.dart';
 import 'package:simple_ttd_architecture/core/usescases/usecase.dart';
@@ -16,4 +17,8 @@ class GetRandomNumberTrivia implements UseCase<NumberTrivia, NoParams> {
   }
 }
 
-class NoParams {}
+class NoParams extends Equatable {
+  @override
+  List<Object> get props => [];
+
+}
