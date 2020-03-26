@@ -9,7 +9,7 @@ import 'package:simple_ttd_architecture/features/number_trivia/domain/repositori
 class GetContreteNumberTrivia implements UseCase <NumberTrivia, Params> {
   final NumberTriviaRepository repository;
 
-  GetContreteNumberTrivia({this.repository});
+  GetContreteNumberTrivia({@required this.repository});
 
   Future<Either<Failure, NumberTrivia>> call(Params params) async {
     return await repository.getConcreteTriviaNumber(params.number);
